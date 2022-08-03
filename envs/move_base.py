@@ -83,7 +83,7 @@ class Robot_config:
         self.X = msg.pose.pose.position.x
         self.Y = msg.pose.pose.position.y
         self.Z = msg.pose.pose.position.z
-        self.PSI = np.arctan2(2 * (q0 * q3 + q1 * q2), (1 - 2 * (q2**2 + q3**2)))
+        self.PSI = np.arctan2(2 * (q0 * q3 + q1 * q2), (1 - 2 * (q2 ** 2 + q3 ** 2)))
         self.qt = (q1, q2, q3, q0)
 
     def get_global_path(self, msg):
@@ -150,10 +150,10 @@ class MoveBase:
             "/move_base/" + self.base_local_planner
         )
         self.local_costmap_client = dynamic_reconfigure.client.Client(
-            "move_base/local_costmap/inflater_layer"
+            "move_base/local_costmap/inflation_layer"
         )
         self.global_costmap_client = dynamic_reconfigure.client.Client(
-            "move_base/global_costmap/inflater_layer"
+            "move_base/global_costmap/inflation_layer"
         )
         self.nav_as = actionlib.SimpleActionClient("/move_base", MoveBaseAction)
         goal = rospy.wait_for_message("/move_base_simple/goal", PoseStamped)
@@ -174,7 +174,7 @@ class MoveBase:
             "/move_base/NavfnROS/plan", Path, self.robot_config.get_global_path
         )
         self.sub_vel = rospy.Subscriber(
-            "/jackal_velocity_controller/cmd_vel", Twist, self.robot_config.vel_monitor
+            "/cmd_vel", Twist, self.robot_config.vel_monitor
         )
 
         self.laser_scan = None
@@ -192,10 +192,10 @@ class MoveBase:
             self.global_costmap_client.update_configuration({param_name: param})
             self.local_costmap_client.update_configuration({param_name: param})
             rospy.set_param(
-                "/move_base/global_costmap/inflater_layer/" + param_name, param
+                "/move_base/global_costmap/inflation_layer/" + param_name, param
             )
             rospy.set_param(
-                "/move_base/local_costmap/inflater_layer/" + param_name, param
+                "/move_base/local_costmap/inflation_layer/" + param_name, param
             )
 
     def get_navi_param(self, param_name):
@@ -203,7 +203,7 @@ class MoveBase:
             param = rospy.get_param("/move_base/" + param_name)
         else:
             param = rospy.get_param(
-                "/move_base/global_costmap/inflater_layer/" + param_name
+                "/move_base/global_costmap/inflation_layer/" + param_name
             )
         return param
 
