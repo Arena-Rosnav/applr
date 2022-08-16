@@ -15,6 +15,7 @@ poetry shell
 ## Make sure to source the workspace environment
 ```bash
 cd ../.. # navigate to the catkin_ws directory
+catkin_make
 source devel/setup.zsh # if you use bash: source devel/setup.bash 
 ```
 ## Install Python dependencies
