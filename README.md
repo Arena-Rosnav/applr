@@ -6,10 +6,18 @@ For original work refer to [UTexas](https://www.cs.utexas.edu/~xiao/Research/APP
 **Please note** APPLR is appropriate for usage on **only** the [Jackal platform](https://clearpathrobotics.com/jackal-small-unmanned-ground-vehicle/).
 
 # Installation
-
+## Add this package to your .rosinstall or clone it manually.
+```bash
+cd ~/catkin_ws/src/arena-bench # Navigate to your arena-bench location
+echo "- git:
+    local-name: ../planners/applr
+    uri: https://github.com/Arena-Rosnav/applr
+    version: master" >> .rosinstall
+rosws update ../planners/applr # or rosws update
+```
 ## Activate poetry shell
 ```bash
-cd arena-rosnav # navigate to the arena-rosnav directory
+cd ~/catkin_ws/src/arena-bench # Navigate to your arena-bench location
 poetry shell
 ```
 ## Make sure to source the workspace environment
@@ -21,5 +29,5 @@ source devel/setup.zsh # if you use bash: source devel/setup.bash
 ## Install Python dependencies
 ```bash
 roscd applr
-pip install -r requirements.txt
+pip install -r requirements.txt # Make sure your virtual environment is activated
 ```
