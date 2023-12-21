@@ -15,7 +15,7 @@ RANGE_DICT = {
 class MotionControlContinuous(DWABase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self._cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+        self._cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
         self.params = None
         # same as the parameters to tune
         self.action_space = Box(

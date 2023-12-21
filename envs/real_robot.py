@@ -53,7 +53,7 @@ class RealRobotEnv(gym.Env):
         # initialize the node for gym env
         rospy.init_node('gym', anonymous=True, log_level=rospy.FATAL)
 
-        self.move_base = MoveBase(goal_position=self.goal_position, base_local_planner=base_local_planner)
+        self.move_base = MoveBase(goal_position=self.goal_position, base_local_planner=base_local_planner, move_base_node=str(rospy.get_param("~move_base_node", "move_base")))
 
         # Not implemented
         self.action_space = None
@@ -303,7 +303,7 @@ class RealRobotMotionControlContinuous(RealRobotEnv):
     def __init__(self, collision_reward=-0.1, **kwargs):
         super().__init__(**kwargs)
         self.collision_reward = collision_reward
-        self._cmd_vel_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+        self._cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
         self.params = None
         # same as the parameters to tune
         self.action_space = Box(

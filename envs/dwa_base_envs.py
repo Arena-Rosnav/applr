@@ -87,7 +87,11 @@ class DWABase(gym.Env):
         self.BASE_PATH = rospack.get_path('jackal_helper')
         launch_file = join(self.BASE_PATH, 'launch', 'move_base_launch.launch')
         self.move_base_process = subprocess.Popen(['roslaunch', launch_file, 'base_local_planner:=' + base_local_planner])
-        move_base = MoveBase(goal_position=goal_position, base_local_planner=base_local_planner)
+        move_base = MoveBase(
+            goal_position=goal_position,
+            base_local_planner=base_local_planner,
+            move_base_node=str(rospy.get_param("~move_base_node", "move_base"))
+        )
         return move_base
 
     def kill_move_base(self):
