@@ -188,6 +188,10 @@ class MoveBase:
 
     def set_navi_param(self, param_name, param):
 
+        if param is None or np.isnan(param):
+            rospy.logwarn(f"tried to set {param_name} to {param}")
+            return
+
         if param_name != "inflation_radius":
             self.planner_client.update_configuration({param_name.split("/")[-1]: param})
             rospy.set_param(os.path.join(self.move_base_node, param_name), param)
